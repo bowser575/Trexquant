@@ -74,6 +74,3 @@ filename,eps
 0000067347-20-000005.html,1.22
 ```
 
-## License
-
-[MIT License](LICENSE)
