@@ -447,5 +447,34 @@ def get_priority(entry):
     
     return priority
 if __name__ == "__main__":
-    df =process_directory('Training_Filings_test', verbose=False)
-    df.to_csv('output.csv')
+    import time
+    import argparse
+    
+    # Set up command line arguments
+    parser = argparse.ArgumentParser(description='Extract EPS values from financial filings.')
+    parser.add_argument('--input_dir', default='Training_Filings_test', help='Directory containing HTML filings')
+    parser.add_argument('--output_file', default='eps_results.csv', help='Output CSV file path')
+    parser.add_argument('--verbose', action='store_true', help='Enable verbose output')
+    
+    args = parser.parse_args()
+    
+    print(f"Starting EPS extraction from {args.input_dir}")
+    print(f"Results will be saved to {args.output_file}")
+    
+    start_time = time.time()
+    
+    # Process the directory
+    results_df = process_directory(args.input_dir, verbose=args.verbose)
+    
+    # Save results to CSV
+    results_df.to_csv(args.output_file, index=False)
+    
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    
+    print(f"Extraction completed in {elapsed_time:.2f} seconds")
+    print(f"Results saved to {args.output_file}")
+    
+    # Show a sample of the results
+    print("\nSample of extracted EPS values:")
+    print(results_df.head(10))
